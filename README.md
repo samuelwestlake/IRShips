@@ -1,8 +1,8 @@
 # IRShips
 
-Version 1.0
-
 Supporting code for the IRShips dataset.
+
+**Version 1.0**
 
 ## Dataloader
 
