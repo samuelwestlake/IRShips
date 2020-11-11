@@ -108,9 +108,11 @@ Re-load the IRShips metadata file.
 
 If metadata is None, the previously given metadata file path will be used, otherwise the newly given filepath will be used and remembered for next time. 
 
-**NB:** the root directory will be prepended to the given file path.      
+**NB:** 
 
-**NB:** resetting the metadata dataframe with `dataset.load_metadata()` will cause indexes to be reset in an ordered fashion.
+- The root directory will be prepended to the given file path.      
+
+- Resetting the metadata dataframe with `dataset.load_metadata()` will cause indexes to be reset in an ordered fashion.
 You may subsequently want to use the `shuffle` method. 
 
         
