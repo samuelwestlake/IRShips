@@ -171,7 +171,7 @@ The metadata file can be accessed directly and filtered by column if required, l
 # It is possible to filter the dataset by metadata attributes, like so: 
 df = dataset.metadata  # Get dataframe
 df = df[df["range"] >= 5000]  # Example: remove all examples where range < 5000m
-df = df[df["pitch"] == 5000]  # Example: remove all examples where pitch != 0
+df = df[df["pitch"] == 0]  # Example: remove all examples where pitch != 0
 dataset.metadata = df  # Set dataframe
 ```
 
