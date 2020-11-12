@@ -22,19 +22,26 @@ utils.Dataloader(
     augment_clutter: str = "augment/clutter",
     cache_sea_images: bool = True,
     cache_sky_images: bool = True,
-    cache_clutter_images: bool = True
+    cache_clutter_images: bool = True,
+    blur=3
 )
 ```
 
-#### root
+#### root 
+
+[str]
         
 Path to the directory of IRShips data.
 
-#### sea_intensity_range
+#### sea_intensity_range 
+
+[tuple of ints]
 
 The minimum and maximum permissible pixel intensities relating to sea-state augmentation.
 
 #### sky_intensity_range
+
+[tuple of ints]
 
 The minimum and maximum permissible pixel intensities relating to sea-state augmentation.
 
@@ -47,38 +54,60 @@ The given dictionary must contain a key for each *type* of background clutter.
         
 #### clutter_height_range
 
+[dict]
+
 The minimum and maximum height of added background clutter as a fraction of the height between the horizon and the top of an image (down to a floor of 10 pixels).
         
 #### clutter_probability
+
+[float]
 
 The probability that clutter will be added to a given image (provided that the sea-sky horizon line is visible in the image).
         
 #### augment_sea
 
-Path to the directory of real-world sea images for data augmentation (if None, sea-state augmentation will not be included).   
-Note that the root directory will be prepended to the given file path.   
+[bool]
+
+Path to the directory of real-world sea images for data augmentation (if None, sea-state augmentation will not be included).
+Note that the root directory will be prepended to the given file path.
 
 #### augment_sky
 
-Path to the directory of real-world sky images for data augmentation (if None, sky-state augmentation will not be included).   
-Note that the root directory will be prepended to the given file path.   
+[bool]
+
+Path to the directory of real-world sky images for data augmentation (if None, sky-state augmentation will not be included).
+Note that the root directory will be prepended to the given file path.
 
 #### augment_clutter
 
-Path to the directory of real-world background clutter images for data augmentation (if None, background clutter augmentation will not be included).   
-Note that the root directory will be prepended to the given file path.   
+[bool]
+
+Path to the directory of real-world background clutter images for data augmentation (if None, background clutter augmentation will not be included).
+Note that the root directory will be prepended to the given file path.
 
 #### cache_sea_images
+
+[bool] 
 
 Whether or not real-world sea images should be stored in memory (for faster dataloading).
 
 #### cache_sky_images
 
+[bool] 
+
 Whether or not real-world sky images should be stored in memory (for faster dataloading). 
 
 #### cache_clutter_images
 
-Whether or not real-world background clutter images should be stored in memory (for faster dataloading).   
+[bool] 
+
+Whether or not real-world background clutter images should be stored in memory (for faster dataloading).
+
+#### blur
+
+[int] 
+
+Kernel size to use for Gaussian blur, use 0 to omit blur. 
 
 ### Methods
 

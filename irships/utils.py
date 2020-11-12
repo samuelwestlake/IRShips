@@ -116,7 +116,8 @@ class Dataloader(object):
                  augment_clutter="augment/clutter",
                  cache_sea_images=True,
                  cache_sky_images=True,
-                 cache_clutter_images=True
+                 cache_clutter_images=True,
+                 blur=3
                  ):
         print("IRShips Dataloader, version %s" % __version__)
         print("Initialising dataset...")
@@ -154,6 +155,7 @@ class Dataloader(object):
         self._cache_clutter_images = cache_clutter_images
 
         # Set data augmentation images
+        self.blur = blur
         self.augment_sea = augment_sea
         self.augment_sky = augment_sky
         self.augment_clutter = augment_clutter
@@ -195,6 +197,10 @@ class Dataloader(object):
                 image = self.__add_sky(image, label)
             if self.augment_clutter:
                 image = self.__add_clutter(image, label)
+                
+        # Apply Gaussian blur
+        if isinstance(self.blur, int) and self.blur > 0:
+            image.image = cv2.GaussianBlur(image.image, (self.blur, self.blur), 0)
 
         # Return the data, is_loaded and is_transformed
         return image, label
@@ -386,8 +392,8 @@ class Dataloader(object):
             image.image[0:image.sea_level, ...] = superimpose(image_top, clouds, mask)
         return image
 
-    def __add_clutter(self, image, label, p=0.5):
-        if np.random.random() < p and image.sea_level:
+    def __add_clutter(self, image, label):
+        if np.random.random() < self.clutter_probability and image.sea_level:
 
             # Set intensity
             intensity = self.clutter_intensity_range
@@ -598,9 +604,10 @@ def stretch_image(image, width, wrap=False):
         for i in range(int(np.ceil(width / w))):
             x0 = i * w
             x1 = min(x0 + w, width)
-            new_image[:, x0:x1] = image[:, :x1 - x0] if i % 2 else cv2.flip(image[:, :x1 - x0], 1)
+            new_image[:, x0:x1] = image[:, :x1-x0] if i % 2 else image[:, ::-1][:, :x1-x0]
     else:
         x0 = np.random.randint(0, width - w)
         x1 = x0 + w
         new_image[:, x0:x1] = image
     return new_image
+
